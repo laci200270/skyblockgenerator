@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="20E842C0-E101-35FD-A39C-E059B1BC43D4.modLaunchConfigurationType">
+<setAttribute key="20E842C0-E101-35FD-A39C-E059B1BC43D4.projects">
+<setEntry value="Skyblock world generator"/>
+</setAttribute>
+<booleanAttribute key="8AB10976-C3D2-3580-8F8A-96F221E9A7FC" value="false"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/Skyblock world generator"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Skyblock world generator"/>
+</launchConfiguration>
