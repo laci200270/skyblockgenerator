@@ -38,8 +38,8 @@ public class DATAFileFormatHelper {
 		System.out.println("Pos2:"+pos2);
 		System.out.println("height: "+height+"width: "+width+"depth: "+depth);
 		for (int y = pos1.y; y < pos2.y; y++) {
-			for (int x= pos1.x; x < pos2.x; x++) {
-				for (int z = pos1.z; z < pos2.z; z++) {
+			for (int x= pos1.x; x < pos2.x+pos1.x-pos2.x; x++) {
+				for (int z = pos1.z; z < pos2.z+pos1.z-pos2.z; z++) {
 					int relativeX=Math.abs(pos1.x-x);
 					int relativeZ=Math.abs(pos1.z-z);
 					int relativeY=Math.abs(pos1.y-y);

@@ -34,3 +34,5 @@ options.txt
 /screenshoots
 /logs
 /crash-reports
+*.lock
+*.lock
