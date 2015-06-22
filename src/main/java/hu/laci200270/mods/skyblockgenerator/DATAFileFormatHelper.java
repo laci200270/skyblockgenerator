@@ -5,11 +5,13 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 public class DATAFileFormatHelper {
 
+	@SuppressWarnings("deprecation")
 	public static NBTTagCompound saveWorldRegionToNBT(World world, BlockPOS pos1,
 			BlockPOS pos2) {
 		NBTTagCompound compound = new NBTTagCompound();
@@ -38,8 +40,8 @@ public class DATAFileFormatHelper {
 		System.out.println("Pos2:"+pos2);
 		System.out.println("height: "+height+"width: "+width+"depth: "+depth);
 		for (int y = pos1.y; y < pos2.y; y++) {
-			for (int x= pos1.x; x < pos2.x+pos1.x-pos2.x; x++) {
-				for (int z = pos1.z; z < pos2.z+pos1.z-pos2.z; z++) {
+			for (int x= pos1.x; x < pos2.x+1; x++) {
+				for (int z = pos1.z; z < pos2.z+1; z++) {
 					int relativeX=Math.abs(pos1.x-x);
 					int relativeZ=Math.abs(pos1.z-z);
 					int relativeY=Math.abs(pos1.y-y);
@@ -51,11 +53,12 @@ public class DATAFileFormatHelper {
 					
 					Integer metadata = world.getBlockMetadata(x, y, z);
 					System.out.println("processing block at:" +new BlockPOS(x, y, z)+"relative condinates:"+new BlockPOS(relativeX, relativeY, relativeZ)+"Block type:"+currentBlockName+"matedata:"+metadata);
-					currentBlockCompound.setBoolean("hasTileEntity", currentBlock.hasTileEntity(metadata));
+					
 					currentBlockCompound.setString("blockid", currentBlockName);
 					currentBlockCompound.setInteger("metadata", metadata);
 					String name = "Block|"+relativeX+"|"+relativeY+"|"+relativeZ;
-					if(currentBlock.hasTileEntity(metadata)){
+					if(currentBlock.hasTileEntity(metadata)||currentBlock.hasTileEntity()){
+						currentBlockCompound.setBoolean("hasTileEntity", true);
 						world.getTileEntity(x, y, z).writeToNBT(tileEntityCompound);
 					}
 					currentBlockCompound.setTag("tileEntityTag", tileEntityCompound);
@@ -68,7 +71,7 @@ public class DATAFileFormatHelper {
 		compound.setInteger("depth", depth);
 		return compound;
 	}
-	public static NBTTagCompound loadWorldRegionFromNBT(World world, BlockPOS pos,NBTTagCompound compound) {
+	public static void loadWorldRegionFromNBT(World world, BlockPOS pos,NBTTagCompound compound) {
 		
 		System.out.println("Starting generating structure at: "+pos);
 		int height=compound.getInteger("height");
@@ -76,8 +79,8 @@ public class DATAFileFormatHelper {
 		int depth=compound.getInteger("depth");
 		System.out.println("height: "+height+"width: "+width+"depth: "+depth);
 		for (int y = pos.y; y < pos.y+height; y++) {
-			for (int x= pos.x; x < pos.x+width; x++) {
-				for (int z = pos.z; z < pos.z+depth; z++) {
+			for (int x= pos.x; x < pos.x+width+1; x++) {
+				for (int z = pos.z; z < pos.z+depth+1; z++) {
 					int relativeX=0;
 					int relativeZ=0;
 					if(pos.x>x){
@@ -106,6 +109,11 @@ public class DATAFileFormatHelper {
 					System.out.println("Setting block at: "+new BlockPOS(x, y, z)+"To this: "+currentBlockCompound.getString("blockid"));
 					world.setBlock(x, y, z, currentBlock, metadata, 2);
 					if(currentBlockCompound.getBoolean("hasTileEntity")){
+						tileEntityCompound.setInteger("x", x);
+						tileEntityCompound.setInteger("y", y);
+						tileEntityCompound.setInteger("z", z);
+						TileEntity.createAndLoadEntity(tileEntityCompound);
+						
 						world.getTileEntity(x, y, z).readFromNBT(tileEntityCompound);
 					}
 					
@@ -115,6 +123,6 @@ public class DATAFileFormatHelper {
 			}
 		}
 		
-		return compound;
+		
 	}
 }

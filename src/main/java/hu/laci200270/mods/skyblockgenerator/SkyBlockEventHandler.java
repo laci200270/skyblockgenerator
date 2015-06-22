@@ -36,6 +36,7 @@ public class SkyBlockEventHandler {
 	//}
 	@SubscribeEvent
 	public void onPlayerConnstruct(EntityJoinWorldEvent event){
+		if(!event.world.isRemote){
 		if(event.entity instanceof EntityPlayer&&event.entity.worldObj.getWorldInfo().getTerrainType()==SkyBlockGeneratorModFile.type){
 			EntityPlayer player=(EntityPlayer) event.entity;
 			SkyBlockPlayerProporites props=new SkyBlockPlayerProporites();
@@ -54,7 +55,7 @@ public class SkyBlockEventHandler {
 					e.printStackTrace();
 				}
 		}
-	}
+	}}
 	
 	
 }
