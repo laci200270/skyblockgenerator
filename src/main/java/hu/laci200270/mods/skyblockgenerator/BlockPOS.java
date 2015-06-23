@@ -4,8 +4,7 @@ public class BlockPOS {
 	public int x;
 	public int y;
 	public int z;
-	
-	
+
 	public BlockPOS(int x, int y, int z) {
 		super();
 		this.x = x;
@@ -13,10 +12,9 @@ public class BlockPOS {
 		this.z = z;
 	}
 
-
 	@Override
 	public String toString() {
 		return "BlockPOS [x=" + x + ", y=" + y + ", z=" + z + "]";
 	}
-	
+
 }

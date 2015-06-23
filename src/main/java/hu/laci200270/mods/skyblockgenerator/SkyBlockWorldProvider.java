@@ -9,7 +9,5 @@ public class SkyBlockWorldProvider extends WorldProvider {
 		// TODO Auto-generated method stub
 		return "overworld";
 	}
-	
-	
 
 }
