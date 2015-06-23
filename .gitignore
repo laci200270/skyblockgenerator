@@ -25,6 +25,7 @@
 /atlassian-ide-plugin.xml
 
 #minecraft
+/usernamecache.json
 usernamecache.json
 options.txt
 /saves

@@ -110,9 +110,8 @@ public class DATAFileFormatHelper {
 							.getTag("Block|" + relativeX + "|" + relativeY
 									+ "|" + relativeZ);
 					if (currentBlockCompound == null) {
-						Minecraft.getMinecraft().crashed(
-								new CrashReport("compound is null",
-										new NullPointerException()));
+
+						throw new NullPointerException("compound is null");
 					}
 					NBTTagCompound tileEntityCompound = currentBlockCompound
 							.getCompoundTag("tileEntityTag");
