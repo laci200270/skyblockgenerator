@@ -1,10 +1,7 @@
 package hu.laci200270.mods.skyblockgenerator;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.crash.CrashReport;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class DATAFileFormatHelper {
@@ -128,9 +125,7 @@ public class DATAFileFormatHelper {
 						tileEntityCompound.setInteger("x", x);
 						tileEntityCompound.setInteger("y", y);
 						tileEntityCompound.setInteger("z", z);
-						TileEntity.createAndLoadEntity(tileEntityCompound);
-						world.getBlock(x, y, z).createTileEntity(world,
-								metadata);
+
 						if (world.getTileEntity(x, y, z) == null) {
 							throw new RuntimeException("TileEntity is null",
 									new NullPointerException());
