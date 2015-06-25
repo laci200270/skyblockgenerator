@@ -126,10 +126,7 @@ public class DATAFileFormatHelper {
 						tileEntityCompound.setInteger("y", y);
 						tileEntityCompound.setInteger("z", z);
 
-						if (world.getTileEntity(x, y, z) == null) {
-							throw new RuntimeException("TileEntity is null",
-									new NullPointerException());
-						}
+						
 						world.getTileEntity(x, y, z).readFromNBT(
 								tileEntityCompound);
 
