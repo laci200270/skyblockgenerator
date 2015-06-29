@@ -2,7 +2,11 @@ package hu.laci200270.mods.skyblockgenerator;
 
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.common.ForgeChunkManager.Ticket;
+import net.minecraftforge.common.ForgeChunkManager.Type;
 
 public class DATAFileFormatHelper {
 
@@ -80,6 +84,13 @@ public class DATAFileFormatHelper {
 			NBTTagCompound compound) {
 
 		System.out.println("Starting generating structure at: " + pos);
+		int chunkX=world.getChunkFromBlockCoords(pos.x, pos.z).xPosition;
+		int chunkZ=world.getChunkFromBlockCoords(pos.x, pos.z).zPosition;
+		System.out.println("Loading chunk at:" +chunkX+";"+chunkZ);
+		world.getChunkFromBlockCoords(chunkX, chunkZ);
+		Ticket chunkLoaderTicket= ForgeChunkManager.requestTicket(SkyBlockGeneratorModFile.instance, world, Type.NORMAL);
+		ForgeChunkManager.forceChunk(chunkLoaderTicket, new ChunkCoordIntPair(chunkX, chunkZ));
+		
 		int height = compound.getInteger("height");
 		int width = compound.getInteger("width");
 		int depth = compound.getInteger("depth");
@@ -125,7 +136,6 @@ public class DATAFileFormatHelper {
 						tileEntityCompound.setInteger("x", x);
 						tileEntityCompound.setInteger("y", y);
 						tileEntityCompound.setInteger("z", z);
-
 						
 						world.getTileEntity(x, y, z).readFromNBT(
 								tileEntityCompound);
@@ -135,6 +145,9 @@ public class DATAFileFormatHelper {
 				}
 			}
 		}
-
+		System.out.println("Unloading chunk");
+		ForgeChunkManager.unforceChunk(chunkLoaderTicket, new ChunkCoordIntPair(chunkX, chunkZ));
+		System.out.println("Releasing ticket");
+		ForgeChunkManager.releaseTicket(chunkLoaderTicket);
 	}
 }
